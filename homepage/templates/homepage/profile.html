@@ -1,0 +1,214 @@
+{% extends 'homepage/index.html' %}
+{% block content %}
+
+<div class="col-md-10 offset-md-1" >
+    {% if user.is_authenticated %}
+        <br>
+        <div class="row">
+          <div class="col-md-4">
+          <!-- First Card -->
+              <div class="card" style="width: 16rem;">
+                  <div class="row"></div>
+                  <img src="{{ user.profile.image.url }}" class="card-img-top" alt="..." height=auto width= 300>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <h6>{{ user.profession.position }} at {{ user.profession.company }}</h6>
+                    <p>{{ user.profile.address }}</p>
+                    {{ user.profile.city }},
+                    {{ user.profile.state }}
+                    <p>{{ user.profile.country }}</p>
+                    <p>Phone # {{ user.profile.phone }}</p>
+                    <p>Email: {{ user.email }}</p>
+                    <a href="#" class="btn btn-primary">Update</a>
+                  </div>
+                  
+              </div>
+          </div>
+          <!-- Second Card -->
+          
+          <div class="col-md-4" >
+            <p>Career</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Career stage:</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.career_stage }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Industry</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.industry }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Industry Interest</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.industry_interest }}</span>
+                          </div>
+                        </li>
+                      </ol>
+                    <br>
+                    <p>Education</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">School:</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.school }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Major - Minor:</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.major_minor }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Graduation Year (or Expected):</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.graduation_year | stringformat:'d' }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                              <div class="fw-bold">GPA:</div>
+                              <span class="badge text-bg-primary rounded-pill">{{ user.profession.gpa }}</span>
+                            </div>
+                          </li>
+                      </ol>
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <p>Career</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Linkedin:</div>
+                            <a href="{{ user.profession.linkedin }}" target="_blank"><span class="badge text-bg-primary rounded-pill">{{ user.profession.linkedin }}</span></a>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Volunteer Interest</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.volunteer_interest }}</span>
+                          </div>
+                        </li>
+  
+                      </ol>
+                    <br>
+                    
+                </div>
+
+                </div>
+
+          </div>
+
+          <!-- hide 
+          <div class="col">
+            <div class="card" style="width: 16rem;">
+                <div class="card-body">
+                    <p>Career</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Career stage:</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.career_stage }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Industry</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.industry }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Industry Interest</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.industry_interest }}</span>
+                          </div>
+                        </li>
+                      </ol>
+                    <br>
+                    <p>Education</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">School:</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.school }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Major - Minor:</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.major_minor }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Graduation Year (or Expected):</div>
+                            <span class="badge text-bg-primary rounded-pill">{{ user.profession.graduation_year | stringformat:'d' }}</span>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                              <div class="fw-bold">GPA:</div>
+                              <span class="badge text-bg-primary rounded-pill">{{ user.profession.gpa }}</span>
+                            </div>
+                          </li>
+                      </ol>
+                </div>
+            </div>
+        </div>
+
+        
+         Third Card 
+        <div class="col">
+          <div class="card" style="width: 24rem;">
+
+              <div class="card-body">
+                  <p>Career</p>
+                  <ol class="list-group">
+                      <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">Linkedin:</div>
+                          <a href="{{ user.profession.linkedin }}" target="_blank"><span class="badge text-bg-primary rounded-pill">{{ user.profession.linkedin }}</span></a>
+                        </div>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">Volunteer Interest</div>
+                          <span class="badge text-bg-primary rounded-pill">{{ user.profession.volunteer_interest }}</span>
+                        </div>
+                      </li>
+
+                    </ol>
+                  <br>
+                  
+              </div>
+          </div>
+      </div> -->
+    </div>
+    {% else %}
+
+        <br>
+        <h1>Login</h1>
+        <br>
+        <form method="POST" action="{% url 'home' id %}">
+            {% csrf_token %}
+            <form>
+                <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Username" name="username" required>
+                </div>
+                <div class="mb-3">
+                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-secondary">Login</button>
+            </form>
+        </form>
+
+
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -2,31 +2,159 @@
 
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Hello Django on Render!</title>
-
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-          crossorigin="anonymous">
-</head>
-<body>
-    <header class="container mt-4 mb-4">
-        <a href="https://render.com">
-            <img src="{% static 'homepage/render-banner.png' %}" alt="Homepage banner" class="mw-100">
-        </a>
-    </header>
-
-<main class="container">
-    <div class="row text-center justify-content-center">
-        <div class="col">
-            <h1 class="display-4">Hello World!</h1>
-        </div>
-    </div>
-</main>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <style>
+          body {
+              font-family: 'Poppins', sans-serif;
+          }
+      </style>
+      <title>LIF - Latinos in Finance</title>
+    </head>
+    <body style="background-color: #ffffff;">
+        <nav class="navbar navbar-expand-lg bg-white navbar-black text-align: center">  
+            <div class="container-fluid">
+                
+              <a class="navbar-brand" href="{% url 'index' %}"><img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1383594624830-QFRNTFEY4CJ8HY4I0QZQ/LIFi.jpg?format=1500w" alt="" height="60"></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                  </li>
+                  {% if user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href=#>Job Board</a>
+                  </li>
+                  {% if user.is_staff %}
+                  <li class="nav-item">
+                    <a class="nav-link" href=#>Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href=#>Resume Board</a>
+                  {% endif %}
+                  <li class="nav-item">
+                    <a class="nav-link" href=#>Logout</a>
+                  </li>
+                  {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href=#>Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=#>Register</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </nav>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    
+        {% block content %}
+    
+    
+    
+        {% endblock %}
+        <div style="background-color: #f9f9f9; padding: 40px; text-align: center; font-family: 'Poppins', sans-serif;">
+          <h2 style="font-size: 2rem; color: #000; margin-bottom: 30px;">Grow with Us!</h2>
+          
+          <div style="display: flex; justify-content: space-around; max-width: 800px; margin: 0 auto;">
+            
+            <a href="#volunteer" style="padding: 15px 30px; background-color: #fff; border: 0.75px solid #333; color: #333; text-decoration: none; border-radius: 30px; transition: background-color 0.3s ease, color 0.3s ease; font-size: 1rem; flex: 1; margin: 0 10px;"
+               onmouseover="this.style.backgroundColor='#333'; this.style.color='#fff';" 
+               onmouseout="this.style.backgroundColor='#fff'; this.style.color='#333';">
+              Volunteer
+            </a>
+            
+            <a href="https://www.latinosinfinance.org/inddonate" style="padding: 15px 30px; background-color: #fff; border: 0.75px solid #333; color: #333; text-decoration: none; border-radius: 30px; transition: background-color 0.3s ease, color 0.3s ease; font-size: 1rem; flex: 1; margin: 0 10px;"
+               onmouseover="this.style.backgroundColor='#333'; this.style.color='#fff';" 
+               onmouseout="this.style.backgroundColor='#fff'; this.style.color='#333';">
+              Donate
+            </a>
+            
+            <a href="#join" style="padding: 15px 30px; background-color: #fff; border: 0.75px solid #333; color: #333; text-decoration: none; border-radius: 30px; transition: background-color 0.3s ease, color 0.3s ease; font-size: 1rem; flex: 1; margin: 0 10px;"
+               onmouseover="this.style.backgroundColor='#333'; this.style.color='#fff';" 
+               onmouseout="this.style.backgroundColor='#fff'; this.style.color='#333';">
+              Join Us
+            </a>
+          
+          </div>
+          </div>
+          
+          <div class="col" style="text-align: center; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          <br>
+          <h5 class="text-center mb-3" style="font-family: 'Poppins', sans-serif; color: #333; margin-bottom: 20px;">CORPORATE PARTNERS</h5>
+          
+          <div style="overflow: hidden; white-space: nowrap;">
+            <div style="display: inline-block; animation: slide 10s linear infinite;">
+              <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1704071007452-6SUCLHODW80BU0KQKS4M/Image+12-31-23+at+5.02%E2%80%AFPM.jpeg?format=300w" alt="Corporate Partner 1" style="height: 50px; margin: 10px; transition: transform 0.3s ease;" 
+                   onmouseover="this.style.transform='scale(1.1)';" 
+                   onmouseout="this.style.transform='scale(1)';">
+              <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1704071017859-3VKWN9FS756X2S4CI62U/Image+12-31-23+at+5.03%E2%80%AFPM.jpeg?format=300w" alt="Corporate Partner 2" style="height: 50px; margin: 10px; transition: transform 0.3s ease;" 
+                   onmouseover="this.style.transform='scale(1.1)';" 
+                   onmouseout="this.style.transform='scale(1)';">
+              <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1713156280872-BVJY6LWFNMYHBRLGWC1N/Screenshot+2024-04-14+at+9.36.19%E2%80%AFPM.png?format=300w" alt="Corporate Partner 3" style="height: 50px; margin: 10px; transition: transform 0.3s ease;" 
+                   onmouseover="this.style.transform='scale(1.1)';" 
+                   onmouseout="this.style.transform='scale(1)';">
+              <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1704071007452-6SUCLHODW80BU0KQKS4M/Image+12-31-23+at+5.02%E2%80%AFPM.jpeg?format=300w" alt="Corporate Partner 1" style="height: 50px; margin: 10px; transition: transform 0.3s ease;" 
+                   onmouseover="this.style.transform='scale(1.1)';" 
+                   onmouseout="this.style.transform='scale(1)';">
+            </div>
+          </div>
+          <br>
+          </div>
+          
+          <style>
+          @keyframes slide {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+          }
+          </style>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd;">
+          <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap;">
+            
+            <div style="flex: 1; min-width: 200px; text-align: left; color: #333;">
+              <p style="margin: 0; font-size: 14px;">&copy; Latinos in Finance (LIF). All Rights Reserved.</p>
+            </div>
+          
+            <div style="flex: 1; min-width: 200px; text-align: center;">
+              <a href="/privacy" style="margin: 0 10px; font-size: 14px; color: #333; text-decoration: none;">Privacy Policy</a>
+              <a href="/terms" style="margin: 0 10px; font-size: 14px; color: #333; text-decoration: none;">Terms of Service</a>
+              <a href="/contact" style="margin: 0 10px; font-size: 14px; color: #333; text-decoration: none;">Contact Us</a>
+            </div>
+          
+            <div style="flex: 1; min-width: 200px; text-align: right;">
+              <a href="https://www.facebook.com/latinosinfinance/" style="margin: 0 10px; color: #333; text-decoration: none;">
+                <img src="/media/images/facebook.png" alt="Facebook" style="width: 32px; height: 32px;">
+              </a>
+              <a href="https://x.com/LatinosInFin" style="margin: 0 10px; color: #333; text-decoration: none;">
+                <img src="/media/images/twitter.png" alt="Twitter" style="width: 32px; height: 32px;">
+              </a>
+              <a href="https://www.linkedin.com/company/latinos-in-finance/posts/?feedView=all" style="margin: 0 10px; color: #333; text-decoration: none;">
+                <img src="/media/images/linkedin (2).png" alt="LinkedIn" style="width: 32px; height: 32px;">
+              </a>
+              <a href="https://www.instagram.com/latinosinfinance/" style="margin: 0 10px; color: #333; text-decoration: none;">
+                <img src="/media/images/instagram.png" alt="Instagram" style="width: 32px; height: 32px;">
+              </a>
+            </div>
+          </div>
+          </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      
 </body>
 </html>

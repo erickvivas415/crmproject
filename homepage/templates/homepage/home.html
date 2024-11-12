@@ -1,0 +1,130 @@
+{% extends 'homepage/index.html' %}
+
+{% block content %}
+<div class="col-md-10 offset-md-1">
+  {% if user.is_authenticated %}
+  <div class="row mb-3">
+    <div class="col">
+      <br>
+    <h1>Welcome, {{ user.first_name }} {{ user.last_name }}</h1>
+
+    <br>
+    </div>
+  </div>    
+  <div id="carousel" style="width: 100%; height: 600px; overflow: hidden; position: relative; margin-bottom: 20px;">
+    <div id="carousel-items" style="display: flex; transition: transform 0.5s ease-in-out; width: 300%;">
+      
+      <div style="flex: 0 0 33.33%; text-align: center; position:relative;">
+        <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1727231962526-5UIYY0W6UTLY76MXHWYX/DSC_3742.JPG?format=1500w" alt="lifevent" style="width: 100%; height: 80%;  object-fit:center; object-position: center;  transition: transform 0.3s ease;" 
+             onmouseover="this.style.transform='scale(1.1)';" 
+             onmouseout="this.style.transform='scale(1)';">
+      </div>
+      <div style="flex: 0 0 33.33%; text-align: center; position: relative;">
+        <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1727231759659-NYF5MQ3R5TR39TBPH4P4/DSC_3976.JPG?format=1500w" alt="lifevent" style="width: 100%; height: auto; transition: transform 0.3s ease;" 
+             onmouseover="this.style.transform='scale(1.1)';" 
+             onmouseout="this.style.transform='scale(1)';">
+      </div>
+      <div style="flex: 0 0 33.33%; text-align: center; position: relative;">
+        <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1702699179408-KNHKRSN6R1EYK672KIQ3/AGI.JPG?format=1000w" alt="Event 3" style="width: 100%; height: auto;  object-fit:center; object-position:center;  transition: transform 0.3s ease;" 
+             onmouseover="this.style.transform='scale(1.1)';" 
+             onmouseout="this.style.transform='scale(1)';">
+      </div>
+    </div>
+  </div>
+  <script>
+    let currentIndex = 0;
+    function rotateCarousel() {
+      const carousel = document.getElementById('carousel-items');
+      currentIndex = (currentIndex + 1) % 3; // Rotate through 3 items
+      carousel.style.transform = `translateX(-${currentIndex * 33.33}%)`;
+    }
+  
+    setInterval(rotateCarousel, 5000); // Rotate every 5 seconds
+  </script>
+  
+      <!--<div class="row"> 
+        <div class="col">
+          <h2>Upcoming Events</h2>
+
+        </div>
+        <div class="col">
+          <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1703132390076-8P522K07AFV21FSI5529/bc13.JPG?format=1000w" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1505791451002-FKTIYJ8Q5G4MKGB3EDX3/Latinos+in+Finance?format=750w" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/45197840-8e1c-4476-be97-425519c0cf55/DSC_0155.jpeg?format=750w" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+            <br>
+        </div>
+      </div>-->
+
+
+
+
+        <!-- Work on this: Display members in a random order, choose what members should be displayed, example new members, members in same sector
+        members in a sector of interest -->
+        <div class="row " > 
+          <h2>Network with Members</h2>
+          <br>
+        {% for x in paginator_userdb %}
+          {% if x == user %}
+
+          {% else %}         
+          <div class="card" style="width: 16rem; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; font-family: 'Poppins', sans-serif; background-color: #fff;">
+            <img src="{{ x.profile.image.url }}" class="card-img-top" alt="Profile Image" style="height: 200px; width: 100%; object-fit: cover; border-bottom: 1px solid #eee;">
+            <div class="card-body" style="padding: 15px; text-align: center;">
+              <h5 class="card-title" style="margin-bottom: 10px; font-size: 1.25rem; font-weight: 600; color: #333;">{{ x.first_name }} {{ x.last_name }}</h5>
+              <h6 style="font-size: 1rem; font-weight: 500; color: #666;">{{ x.profession.position }}</h6>
+              <h6 style="font-size: 1rem; font-weight: 500; color: #666;">at {{ x.profession.company }}</h6>
+              <p style="font-size: 0.9rem; color: #888; margin-top: 8px;">{{ x.profile.city }}, {{ x.profile.state }}<br>{{ x.profile.country }}</p>
+              <a href="{% url 'members_profile' x.id %}" class="btn btn-primary" style="padding: 10px 20px; background-color: #007bff; border: none; border-radius: 50px; color: white; text-decoration: none; transition: background-color 0.3s ease;">
+                View
+              </a>
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+          </div>
+  {% else %}
+
+      <br>
+      <h1>Login</h1>
+      <br>
+      <form method="POST" action="{% url 'home' %}">
+          {% csrf_token %}
+          <form>
+              <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Username" name="username" required>
+              </div>
+              <div class="mb-3">
+              <input type="password" class="form-control" placeholder="Password" name="password" required>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-secondary">Login</button>
+          </form>
+      </form>
+  {% endif %}
+ 
+</div>
+
+{% endblock %}
