@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import User, Members, Profile, Profession
 
 # Create your views here.
 
@@ -10,3 +11,8 @@ def home(request):
 
 def profile(request):
     return render(request, 'homepage/profile.html', {})
+
+
+def resumeboard(request):
+    userdb = User.objects.all()
+    return render(request, 'resumeboard.html', {'userdb': userdb})

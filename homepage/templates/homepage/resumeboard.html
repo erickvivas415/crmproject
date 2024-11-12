@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="col-md-10 offset-md-1 my-3">
+    <h2>Members resumes</h2>
+    <br>
+    <form>
+        <div class="mb-3">
+          <label for="searchbar" class="form-label">Search By:</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">Search by: Career stage, City, Current Position, Industry, GDP, etc.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    <br>
+
+    {% for item in userdb %}
+        <p>{{ item.first_name }} {{ item.last_name }} <a href="{{ item.profile.resume.url }}">Resume</a></p>
+        
+
+    {% endfor %}
+</div>
+
+{% endblock %}
