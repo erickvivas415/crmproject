@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from PIL import Image
 
 # Create your models here.
+
+'''
 class Members(models.Model):
     #liked_by = models.ManyToManyField(User, related_name="liked_quotes")
     first_name = models.CharField(max_length=30)
@@ -19,6 +21,7 @@ class Members(models.Model):
     
     def __str__(self):
         return(f"{self.first_name} {self.last_name}")
+'''
 
 gender_choices = (
     ('Female','Female'),

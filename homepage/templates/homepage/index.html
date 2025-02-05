@@ -12,7 +12,7 @@
               font-family: 'Poppins', sans-serif;
           }
       </style>
-      <title>LIF - Latinos in Finance</title>
+      <title>LIF - Latinos in Finance - Si Se Puede</title>
     </head>
     <body style="background-color: #ffffff;">
         <nav class="navbar navbar-expand-lg bg-white navbar-black text-align: center">  
@@ -42,14 +42,14 @@
                     <a class="nav-link" href=#>Resume Board</a>
                   {% endif %}
                   <li class="nav-item">
-                    <a class="nav-link" href=#>Logout</a>
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                   </li>
                   {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href=#>Login</a>
+                        <a class="nav-link" href="{% url 'home' %}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href=#>Register</a>
+                        <a class="nav-link" href="{% url 'register_user' %}">Register</a>
                     </li>
                   {% endif %}
                 </ul>
@@ -63,6 +63,8 @@
                 </div>
             {% endfor %}
         {% endif %}
+
+        
     
         {% block content %}
     
