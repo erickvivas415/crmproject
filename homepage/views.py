@@ -30,7 +30,7 @@ def login_user(request):
             messages.error(request, "Invalid username or password")  # Show error message
             return redirect('login_user')  # Redirect back to login page
 
-    return render(request, 'login.html')  # Render login page for GET requests
+    return render(request, 'login_user.html')  # Render login page for GET requests
 
    
 def logout_user(request):
