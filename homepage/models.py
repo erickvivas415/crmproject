@@ -29,7 +29,7 @@ gender_choices = (
     ('Prefer not to say','Prefer not to say'))
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", null=True)
     phone = models.CharField(max_length=15, blank=True)
     city = models.CharField(max_length=30)
     state = models.CharField(max_length=30)
@@ -62,7 +62,7 @@ career_stage_choices = (
 )
     
 class Profession(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profession",null=True)
     linkedin = models.URLField(max_length=200)
     industry = models.CharField(max_length=30)
     career_stage = models.CharField(max_length=30, choices=career_stage_choices, default='Student')

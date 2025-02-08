@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from .forms import SignUpForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -56,6 +57,54 @@ def register_user(request):
         form = SignUpForm()
         return render(request, 'homepage/register_user.html', {'form': form})
     return render(request, 'homepage/register_user.html', {'form': form})
+
+@login_required
+def update_profile(request):
+    if request.method == "POST":
+        user = request.user
+
+        # Ensure profile exists
+        profile, _ = Profile.objects.get_or_create(user=user)
+        
+        # Ensure profession exists
+        profession, _ = Profession.objects.get_or_create(user=user)
+
+        #profile = user.profile
+        #profession = user.profession
+
+        # Update fields from the form
+        profession.position = request.POST.get("position", profession.position or "")
+        profession.company = request.POST.get("company", profession.company or "")
+        profile.city = request.POST.get("city", profile.city or "")
+        profile.state = request.POST.get("state", profile.state or "")
+        profile.country = request.POST.get("country", profile.country or "")
+        profile.phone = request.POST.get("phone", profile.phone or "")
+        user.email = request.POST.get("email", user.email or "")
+        profession.linkedin = request.POST.get("linkedin", profession.linkedin or "")
+        profession.industry = request.POST.get("industry", profession.industry or "")
+        profession.career_stage = request.POST.get("career_stage", profession.career_stage or "")
+        profession.school = request.POST.get("school", profession.school or "")
+        profession.industry_interest = request.POST.get("industry_interest", profession.industry_interest or "")
+        profession.gpa = request.POST.get("gpa", profession.gpa or "")
+
+        profession.volunteer_interest = request.POST.get("volunteer_interest", profession.volunteer_interest or "")
+
+
+
+
+        # Handle image upload
+        if "image" in request.FILES:
+            profile.image = request.FILES["image"]
+
+        # Save updates
+        profession.save()
+        profile.save()
+        user.save()
+
+        messages.success(request, "Profile updated successfully!")
+        return redirect("profile")
+
+    return render(request, "homepage/update_profile.html", {"user": request.user})
 
 
 def resumeboard(request):

@@ -20,13 +20,10 @@
                     <p>Phone # {{ user.profile.phone }}</p>
                     <p>Email: {{ user.email }}</p>
                     <p>{{ user.profile.image.url }}</p>
-                    <a href="#" class="btn btn-primary">Update</a>
-                  </div>
-                  
+                  </div>                  
               </div>
           </div>
           <!-- Second Card -->
-          
           <div class="col-md-4" >
             <p>Career</p>
                     <ol class="list-group">
@@ -189,6 +186,10 @@
           </div>
       </div> -->
     </div>
+    <div class="d-flex justify-content-center mb-3 mt-3">
+      <a href="{% url 'update_profile' %}" class="btn btn-primary">Update Profile</a>
+    </div>
+    
     {% else %}
 
         <br>

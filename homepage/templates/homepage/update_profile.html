@@ -1,0 +1,165 @@
+{% extends 'homepage/index.html' %}
+{% block content %}
+
+<div class="col-md-10 offset-md-1" >
+    {% if user.is_authenticated %}
+        <br>
+        <div class="row">
+          <div class="col-md-4">
+          <!-- First Card -->
+              <div class="card" style="width: 16rem;">
+                  <div class="row"></div>
+                  <img src="{{ user.profile.image.url }}" class="card-img-top" alt="..." height=auto width= 300>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <h6>
+                            <input type="text" name="position" class="form-control" value="{{ user.profession.position }}" required>
+                            at 
+                            <input type="text" name="company" class="form-control" value="{{ user.profession.company }}" required>
+                        </h6>
+                        <label>City:</label>
+                        <input type="text" name="city" class="form-control" value="{{ user.profile.city }}" required>
+                    
+                        <label>State:</label>
+                        <input type="text" name="state" class="form-control" value="{{ user.profile.state }}" required>
+                    
+                        <label>Country:</label>
+                        <input type="text" name="country" class="form-control" value="{{ user.profile.country }}" required>
+                    
+                        <label>Phone #:</label>
+                        <input type="text" name="phone" class="form-control" value="{{ user.profile.phone }}" required>
+                    
+                        <label>Email:</label>
+                        <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                    
+                        <label>Profile Image:</label>
+                        {% if user.profile.image %}
+                            <img src="{{ user.profile.image.url }}" alt="Profile Image" class="img-thumbnail" width="100">
+                        {% endif %}
+                        <input type="file" name="image" class="form-control">
+                    
+                        
+                  </div>
+                  
+              </div>
+          </div>
+          <!-- Second Card -->
+          
+          <div class="col-md-4" >
+            <p>Career</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Career stage:</div>
+                            <select name="career_stage" class="form-control" required>
+                                <option value="Student" {% if user.profession.career_stage == "Student" %}selected{% endif %}>Student</option>
+                                <option value="Entry Level" {% if user.profession.career_stage == "Entry Level" %}selected{% endif %}>Entry Level</option>
+                                <option value="Mid Level" {% if user.profession.career_stage == "Mid Level" %}selected{% endif %}>Mid Level</option>
+                                <option value="Senior Level" {% if user.profession.career_stage == "Senior Level" %}selected{% endif %}>Senior Level</option>
+                                <option value="Executive" {% if user.profession.career_stage == "Executive" %}selected{% endif %}>Executive</option>
+                            </select>
+                                <input type="text" name="career_stage" class="form-control" value="{{ user.profession.career_stage }}" required>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Industry</div>
+                            <input type="text" name="industry" class="form-control" value="{{ user.profession.industry }}" required>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Industry Interest</div>
+                            <input type="text" name="industry_interest" class="form-control" value="{{ user.profession.industry_interest }}" required>
+                          </div>
+                        </li>
+                      </ol>
+                    <br>
+                    <p>Education</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">School:</div>
+                            <input type="text" name="school" class="form-control" value="{{ user.profession.school }}" required>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Major - Minor:</div>
+                            <input type="text" name="major_minor" class="form-control" value="{{ user.profession.major_minor }}" required>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Graduation Year (or Expected):</div>
+                            <input type="text" name="career_stage" class="form-control" value="{{ user.profession.graduation_year }}" required>
+                            <!-- <span class="badge text-bg-primary rounded-pill">{{ user.profession.graduation_year | stringformat:'d' }}</span> -->
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                              <div class="fw-bold">GPA:</div>
+                                <input type="text" name="gpa" class="form-control" value="{{ user.profession.gpa }}" required>
+                            </div>
+                          </li>
+                      </ol>
+                </div>
+                <div class="col-md-4">
+                  <div class="card-body">
+                    <p>Career</p>
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Linkedin:</div>
+                            <input type="text" name="linkedin" class="form-control" value="{{ user.profession.linkedin }}" required>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Volunteer Interest</div>
+                            <select name="volunteer_interest" class="form-control" required>
+                                <option value="Yes" {% if user.profession.volunteer_interest == "Yes" %}selected{% endif %}>Yes</option>
+                                <option value="No" {% if user.profession.volunteer_interest != "Yes" %}selected{% endif %}>No</option>
+                            </select>
+                          </div>
+                        </li>
+  
+                      </ol>
+                    <br>
+                    
+                </div>
+
+                </div>
+
+          </div>
+          <br>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+    </div>
+    {% else %}
+
+        <br>
+        <h1>Login</h1>
+        <br>
+        <form method="POST" action="{% url 'home' id %}">
+            {% csrf_token %}
+            <form>
+                <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Username" name="username" required>
+                </div>
+                <div class="mb-3">
+                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-secondary">Login</button>
+            </form>
+        </form>
+
+
+    {% endif %}
+</div>
+
+{% endblock %}
