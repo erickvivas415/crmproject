@@ -71,8 +71,8 @@ class Profession(models.Model):
     industry_interest = models.CharField(max_length=30)
     school = models.CharField(max_length=30)
     major_minor = models.CharField(max_length=30)
-    gpa = models.DecimalField(max_digits=3, decimal_places=2)
-    graduation_year = models.IntegerField()
+    gpa = models.DecimalField(max_digits=3, decimal_places=2, null=False, default=0.00)
+    graduation_year = models.IntegerField(default=1900)
     volunteer_interest = models.CharField(max_length=30)
     date_updated = models.DateField(auto_now=True)
     

@@ -85,8 +85,8 @@ def update_profile(request):
         
         profession.school = request.POST.get("school", profession.school or "")
         profession.major_minor = request.POST.get("major_minor", profession.major_minor or "")
-        profession.graduation_year = request.POST.get("graduation_year", profession.graduation_year or "")
-        profession.gpa = request.POST.get("gpa", profession.gpa or "")
+        profession.graduation_year = request.POST.get("graduation_year", profession.graduation_year or "1900")
+        profession.gpa = request.POST.get("gpa", profession.gpa or "0.00")
         # Third Card
         profession.linkedin = request.POST.get("linkedin", profession.linkedin or "")
         profession.volunteer_interest = request.POST.get("volunteer_interest", profession.volunteer_interest or "")
