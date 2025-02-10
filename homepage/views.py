@@ -69,10 +69,8 @@ def update_profile(request):
         # Ensure profession exists
         profession, _ = Profession.objects.get_or_create(user=user)
 
-        #profile = user.profile
-        #profession = user.profession
-
         # Update fields from the form
+        # First Card
         profession.position = request.POST.get("position", profession.position or "")
         profession.company = request.POST.get("company", profession.company or "")
         profile.city = request.POST.get("city", profile.city or "")
@@ -80,13 +78,17 @@ def update_profile(request):
         profile.country = request.POST.get("country", profile.country or "")
         profile.phone = request.POST.get("phone", profile.phone or "")
         user.email = request.POST.get("email", user.email or "")
-        profession.linkedin = request.POST.get("linkedin", profession.linkedin or "")
-        profession.industry = request.POST.get("industry", profession.industry or "")
+        # Second Card
         profession.career_stage = request.POST.get("career_stage", profession.career_stage or "")
-        profession.school = request.POST.get("school", profession.school or "")
+        profession.industry = request.POST.get("industry", profession.industry or "")
         profession.industry_interest = request.POST.get("industry_interest", profession.industry_interest or "")
+        
+        profession.school = request.POST.get("school", profession.school or "")
+        profession.major_minor = request.POST.get("major_minor", profession.major_minor or "")
+        profession.graduation_year = request.POST.get("graduation_year", profession.graduation_year or "")
         profession.gpa = request.POST.get("gpa", profession.gpa or "")
-
+        # Third Card
+        profession.linkedin = request.POST.get("linkedin", profession.linkedin or "")
         profession.volunteer_interest = request.POST.get("volunteer_interest", profession.volunteer_interest or "")
 
 

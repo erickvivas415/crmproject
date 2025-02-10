@@ -61,7 +61,6 @@
                                 <option value="Senior Level" {% if user.profession.career_stage == "Senior Level" %}selected{% endif %}>Senior Level</option>
                                 <option value="Executive" {% if user.profession.career_stage == "Executive" %}selected{% endif %}>Executive</option>
                             </select>
-                                <input type="text" name="career_stage" class="form-control" value="{{ user.profession.career_stage }}" required>
                           </div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
