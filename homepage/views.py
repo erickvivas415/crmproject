@@ -6,6 +6,12 @@ from django.shortcuts import redirect
 from .forms import SignUpForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
+
 
 # Create your views here.
 
@@ -49,6 +55,40 @@ def register_user(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            # Send registration email
+            load_dotenv()
+
+            SMTP_SERVER = "smtp.gmail.com"
+            SMTP_PORT = 587
+            EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
+            EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+
+            def send_email(recipient_email, subject, body):
+                try:
+                    msg = MIMEMultipart()
+                    msg['From'] = EMAIL_ADDRESS
+                    msg['To'] = recipient_email
+                    msg['Subject'] = subject
+
+                    msg.attach(MIMEText(body, 'plain'))
+
+                    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                        server.starttls()
+                        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                        text = msg.as_string()
+                        server.sendmail(EMAIL_ADDRESS, recipient_email, text)
+                        print('Email sent')
+                except Exception as e:
+                    print(f'Error: {e}')
+
+
+            
+            recipient = user.email
+            subject = "You have successfully registered"
+            body = "Thanks for registerig with us"
+            send_email(recipient, subject, body)
+
+
             messages.success(request, 'You have successfully registered.')
             return redirect('home')
         else:
