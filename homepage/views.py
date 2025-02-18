@@ -56,30 +56,22 @@ def register_user(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             # Send registration email
+            from sendgrid import SendGridAPIClient
+            from sendgrid.helpers.mail import Mail
             load_dotenv()
-
-            SMTP_SERVER = "smtp.gmail.com"
-            SMTP_PORT = 587
-            EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
-            EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-
-            def send_email(recipient_email, subject, body):
-                try:
-                    msg = MIMEMultipart()
-                    msg['From'] = EMAIL_ADDRESS
-                    msg['To'] = recipient_email
-                    msg['Subject'] = subject
-
-                    msg.attach(MIMEText(body, 'plain'))
-
-                    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                        server.starttls()
-                        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-                        text = msg.as_string()
-                        server.sendmail(EMAIL_ADDRESS, recipient_email, text)
-                        print('Email sent')
-                except Exception as e:
-                    print(f'Error: {e}')
+            message = Mail(
+                from_email='membership@latinosinfinance.org',
+                to_emails=user.email
+                subject='Regisration Successful',
+                html_content='<strong>Thanks for registering with us!!!</strong>')
+            try:
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                response = sg.send(message)
+                print(response.status_code)
+                print(response.body)
+                print(response.headers)
+            except Exception as e:
+                print(e.message)
 
 
             
