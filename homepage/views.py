@@ -61,7 +61,7 @@ def register_user(request):
             load_dotenv()
             message = Mail(
                 from_email='membership@latinosinfinance.org',
-                to_emails= request.user.email
+                to_emails= request.user.email,
                 subject='Regisration Successful',
                 html_content='<strong>Thanks for registering with us!!!</strong>')
             try:
