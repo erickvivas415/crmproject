@@ -73,14 +73,6 @@ def register_user(request):
             except Exception as e:
                 print(e.message)
 
-
-            
-            recipient = user.email
-            subject = "You have successfully registered"
-            body = "Thanks for registerig with us"
-            send_email(recipient, subject, body)
-
-
             messages.success(request, 'You have successfully registered.')
             return redirect('home')
         else:
