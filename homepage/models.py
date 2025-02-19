@@ -35,7 +35,7 @@ class Profile(models.Model):
     state = models.CharField(max_length=30)
     country = models.CharField(max_length=30)
     gender = models.CharField(max_length=30, choices=gender_choices, default='Female')
-    image = models.ImageField(blank=True, upload_to='images/', default='images/profilepicture.jpg', null=True)
+    image = models.ImageField(blank=True, upload_to='media/images/', default='images/profilepicture.jpg', null=True)
     resume = models.FileField(blank=True, upload_to='resumes/', null=True)
     date_updated = models.DateField(auto_now=True)
     last_seen = models.DateField(auto_now=True)
