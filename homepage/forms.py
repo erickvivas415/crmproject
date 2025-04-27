@@ -9,6 +9,7 @@ class SignUpForm(UserCreationForm):
     email = forms.EmailField(label="", required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
     first_name = forms.CharField(label="", required=True, max_length=60, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
     last_name = forms.CharField(label="", required=True, max_length=60, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
+    file = forms.FileField()
 
 
     class Meta:

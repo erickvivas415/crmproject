@@ -13,6 +13,18 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 
 
+import io
+#import google_auth_oauthlib.flow
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+from google.auth.transport.requests import Request
+from django.shortcuts import render, redirect
+from django.conf import settings
+
+
+
+
+
 # Create your views here.
 
 def index(request):
@@ -136,3 +148,65 @@ def update_profile(request):
 def resumeboard(request):
     userdb = User.objects.all()
     return render(request, 'resumeboard.html', {'userdb': userdb})
+
+
+# Load credentials and create the API client
+def create_drive_service():
+    creds = None
+    if os.path.exists('token.json'):
+        creds = google.oauth2.credentials.Credentials.from_authorized_user_file('token.json')
+    
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+                settings.GOOGLE_CLIENT_SECRET, ['https://www.googleapis.com/auth/drive.file']
+            )
+            creds = flow.run_local_server(port=0)
+
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+    
+    service = build('drive', 'v3', credentials=creds)
+    return service
+
+# Handle file upload to Google Drive
+def upload_file_to_drive(request):
+    if request.method == 'POST' and request.FILES['file']:
+        uploaded_file = request.FILES['file']
+        
+        # Save file temporarily
+        temp_file = io.BytesIO(uploaded_file.read())
+        temp_file.name = uploaded_file.name
+        
+        service = create_drive_service()
+
+        file_metadata = {'name': uploaded_file.name}
+        media = MediaFileUpload(temp_file, mimetype=uploaded_file.content_type)
+
+        # Upload the file to Google Drive
+        drive_file = service.files().create(
+            media_body=media,
+            body=file_metadata,
+            fields='id, webViewLink'
+        ).execute()
+
+        file_url = drive_file.get('webViewLink')
+
+        # Save the file URL in the database
+        new_file = File.objects.create(
+            file_name=uploaded_file.name,
+            file_url=file_url
+        )
+
+        return redirect('file_upload:success')
+
+    else:
+        form = FileUploadForm()
+    
+    return render(request, 'file_upload/upload.html', {'form': form})
+
+# Success view
+def success(request):
+    return render(request, 'file_upload/success.html')

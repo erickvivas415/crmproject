@@ -37,6 +37,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=30, choices=gender_choices, default='Female')
     image = models.ImageField(blank=True, upload_to='images/', default='images/profilepicture.jpg', null=True)
     resume = models.FileField(blank=True, upload_to='resumes/', null=True)
+    file_url = models.URLField(max_length=255, blank=True)
     date_updated = models.DateField(auto_now=True)
     last_seen = models.DateField(auto_now=True)
 
