@@ -14,10 +14,6 @@ from dotenv import load_dotenv
 
 
 import io
-#import google_auth_oauthlib.flow
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
-from google.auth.transport.requests import Request
 from django.shortcuts import render, redirect
 from django.conf import settings
 
