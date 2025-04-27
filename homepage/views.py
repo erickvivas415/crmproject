@@ -114,9 +114,6 @@ def update_profile(request):
         profession.linkedin = request.POST.get("linkedin", profession.linkedin or "")
         profession.volunteer_interest = request.POST.get("volunteer_interest", profession.volunteer_interest or "")
 
-
-
-
         # Handle image upload
         if "image" in request.FILES:
             profile.image = request.FILES["image"]
@@ -136,8 +133,3 @@ def resumeboard(request):
     userdb = User.objects.all()
     return render(request, 'resumeboard.html', {'userdb': userdb})
 
-
-
-# Success view
-def success(request):
-    return render(request, 'file_upload/success.html')
