@@ -20,7 +20,6 @@ from django.conf import settings
 
 
 
-
 # Create your views here.
 
 def index(request):
@@ -63,14 +62,7 @@ def register_user(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            # Send registration email
-            load_dotenv()
-            try:
-                print(response.status_code)
-                print(response.body)
-                print(response.headers)
-            except Exception as e:
-                print(e.message)
+
 
             messages.success(request, 'You have successfully registered.')
             return redirect('home')
