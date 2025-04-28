@@ -1,27 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-
+from io import BytesIO
+from django.core.files.storage import default_storage
 # Create your models here.
-
-'''
-class Members(models.Model):
-    #liked_by = models.ManyToManyField(User, related_name="liked_quotes")
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=254)
-    phone = models.CharField(max_length=15)
-    #address = models.CharField(max_length=100)
-    city = models.CharField(max_length=30)
-    state = models.CharField(max_length=30)
-    #zip = models.CharField(max_length=10)
-    country = models.CharField(max_length=30)
-    date_joined = models.DateField(auto_now_add=True)
-    date_updated = models.DateField(auto_now=True)
-    
-    def __str__(self):
-        return(f"{self.first_name} {self.last_name}")
-'''
 
 gender_choices = (
     ('Female','Female'),
@@ -46,13 +28,27 @@ class Profile(models.Model):
         return(f"{self.user}")
     
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        img = Image.open(self.image.path)
+            super().save(*args, **kwargs)
+            
+            # Check if there is an image and it's not the default one
+            if self.image and self.image.name != 'images/profilepicture.jpg':
+                # Open the image file directly from the storage
+                img = Image.open(self.image)
 
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+                # Resize the image if it's larger than 300x300
+                if img.height > 300 or img.width > 300:
+                    output_size = (300, 300)
+                    img.thumbnail(output_size)
+                    
+                    # Save the image back to the storage
+                    img_io = BytesIO()
+                    img.save(img_io, format='JPEG')
+                    img_io.seek(0)
+                    
+                    # Save the modified image back to the field
+                    self.image.save(self.image.name, img_io, save=False)
+            
+            super().save(*args, **kwargs)
     
 career_stage_choices = (
     ('Student', 'Student'),
