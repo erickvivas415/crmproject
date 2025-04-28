@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
 
 import environ
 
@@ -141,6 +143,8 @@ USE_TZ = True
 # AWS S3 settings
 AWS_STORAGE_BUCKET_NAME = 'crmproject1' 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_DEFAULT_REGION = 'us-west-2'  # Adjust this to your region
+
 
 # Media files (User uploads)
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
