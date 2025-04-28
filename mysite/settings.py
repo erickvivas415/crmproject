@@ -139,7 +139,7 @@ USE_TZ = True
 
 
 # AWS S3 settings
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', 'your_default_bucket_name')
+AWS_STORAGE_BUCKET_NAME = 'crmproject1'
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_DEFAULT_REGION = os.getenv('AWS_DEFAULT_REGION', 'us-west-2')
 
