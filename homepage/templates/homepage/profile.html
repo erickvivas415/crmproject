@@ -19,7 +19,6 @@
                     <p>{{ user.profile.country }}</p>
                     <p>Phone # {{ user.profile.phone }}</p>
                     <p>Email: {{ user.email }}</p>
-                    <p>{{ user.profile.image.url }}</p>
                   </div>                  
               </div>
           </div>
@@ -83,6 +82,12 @@
                           <div class="ms-2 me-auto">
                             <div class="fw-bold">Linkedin:</div>
                             <a href="{{ user.profession.linkedin }}" target="_blank"><span class="badge text-bg-primary rounded-pill">{{ user.profession.linkedin }}</span></a>
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Resume:</div>
+                            <a href="{{ user.profile.resume.url }}" target="_blank"><span class="badge text-bg-primary rounded-pill">View here</span></a>
                           </div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">

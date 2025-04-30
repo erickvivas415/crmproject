@@ -11,12 +11,14 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
-
+from django.core.files.storage import default_storage
 
 import io
 from django.shortcuts import render, redirect
 from django.conf import settings
 
+
+from django.db.models import Q
 
 
 
@@ -105,6 +107,8 @@ def update_profile(request):
         # Third Card
         profession.linkedin = request.POST.get("linkedin", profession.linkedin or "")
         profession.volunteer_interest = request.POST.get("volunteer_interest", profession.volunteer_interest or "")
+        profile.resume = request.FILES.get("resume", profile.resume or None)
+        # Handle resume upload
 
         # Handle image upload
         if "image" in request.FILES:
@@ -123,5 +127,19 @@ def update_profile(request):
 
 def resumeboard(request):
     userdb = User.objects.all()
-    return render(request, 'resumeboard.html', {'userdb': userdb})
+    return render(request, "homepage/resumeboard.html", {'userdb': userdb})
 
+def search_members(request):
+    search_query = request.GET.get('search', '')    
+
+    userdb = Profession.objects.select_related('user', 'user__profile').filter(
+        Q(career_stage__icontains=search_query) |
+        Q(position__icontains=search_query) |
+        Q(industry__icontains=search_query) |
+        Q(company__icontains=search_query) |
+        Q(user__profile__city__icontains=search_query) |  # Searching in Profile model's city
+        Q(user__profile__state__icontains=search_query) |  # Searching in Profile model's state
+        Q(user__profile__country__icontains=search_query)  # Searching in Profile model's country
+    )
+
+    return render(request, 'homepage/search_members.html', {'userdb': userdb})

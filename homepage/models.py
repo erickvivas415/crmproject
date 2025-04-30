@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from PIL import Image
 from io import BytesIO
 from django.core.files.storage import default_storage
+from django.core.validators import FileExtensionValidator
+
 # Create your models here.
 
 gender_choices = (

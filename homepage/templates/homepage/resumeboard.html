@@ -3,23 +3,41 @@
 
 
 <div class="col-md-10 offset-md-1 my-3">
-    <h2>Members resumes</h2>
-    <br>
-    <form>
-        <div class="mb-3">
-          <label for="searchbar" class="form-label">Search By:</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div id="emailHelp" class="form-text">Search by: Career stage, City, Current Position, Industry, GDP, etc.</div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    <br>
+  <h2>Members Resumes</h2>
+  <br>
+  <div class="mb-3">
+      <label for="searchbar" class="form-label">Search By:</label>
+      <input type="text" class="form-control" id="searchbar" placeholder="Career stage, City, Position, Industry...">
+      <div id="searchHelp" class="form-text">Search by: Career stage, City, Current Position, Industry, etc.</div>
+  </div>
+  <br>
 
-    {% for item in userdb %}
-        <p>{{ item.first_name }} {{ item.last_name }} <a href="{{ item.profile.resume.url }}">Resume</a></p>
-        
-
-    {% endfor %}
+  <div id="results">
+      {% for item in userdb %}
+          <p>{{ item.first_name }} {{ item.last_name }}
+              {% if item.profile.resume %}
+                  <a href="{{ item.profile.resume.url }}">Resume</a>
+              {% endif %}
+          </p>
+      {% empty %}
+          <p>No members found.</p>
+      {% endfor %}
+  </div>
 </div>
+
+<script>
+  const searchBar = document.getElementById('searchbar');
+  const resultsDiv = document.getElementById('results');
+
+  searchBar.addEventListener('keyup', function() {
+      const query = searchBar.value;
+      
+      fetch(`/search_members/?search=${query}`)
+          .then(response => response.text())
+          .then(data => {
+              resultsDiv.innerHTML = data;
+          });
+  });
+</script>
 
 {% endblock %}

@@ -1,0 +1,21 @@
+{% for item in userdb %}
+    {% if item.user %}
+        <p>
+
+            {{ item.user.first_name }} {{ item.user.last_name }}      
+            {% if item.user.profile %}
+                <br>City: {{ item.user.profile.city }}
+                <br>State: {{ item.user.profile.state }}             
+                {% if item.user.profile.resume %}
+                    <a href="{{ item.user.profile.resume.url }}">Resume</a>
+                {% else %}
+                    No resume available
+                {% endif %}
+            {% endif %}
+        </p>
+    {% else %}
+        <p>User not linked</p>
+    {% endif %}
+{% empty %}
+    <p>No matching members found.</p>
+{% endfor %}
