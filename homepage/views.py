@@ -79,20 +79,7 @@ def register_user(request):
             login(request, user)
 
             # Send a welcome email
-            send_mail(
-                subject='Welcome to Latinos in Finance!',
-                message=(
-                f"Hi {user.first_name} {user.last_name},\n\n"
-                "Thank you for registering with Latinos in Finance.\n"
-                "We're excited to have you on board!\n\n"
-                "Visit your profile to update your resume and explore opportunities.\n\n"
-                "Best,\n"
-                "The LIF Team"
-                ),
-                from_email='membership@latinosinfinance.org',
-                recipient_list=[email1],
-                fail_silently=False
-            )
+            
             messages.success(request, 'You have successfully registered.')
             return redirect('home')
         else:
