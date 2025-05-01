@@ -78,18 +78,31 @@
                   <div class="card-body">
                     <p>Career</p>
                     <ol class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                          <div class="ms-2 me-auto">
-                            <div class="fw-bold">Linkedin:</div>
-                            <a href="{{ user.profession.linkedin }}" target="_blank"><span class="badge text-bg-primary rounded-pill">{{ user.profession.linkedin }}</span></a>
-                          </div>
-                        </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-bold">LinkedIn:</div>
+                          {% if user.profession.linkedin %}
+                            <a href="{{ user.profession.linkedin }}" target="_blank">
+                              <span class="badge text-bg-primary rounded-pill">{{ user.profession.linkedin }}</span>
+                            </a>
+                          {% else %}
+                            <span class="badge text-bg-secondary rounded-pill">No LinkedIn provided</span>
+                          {% endif %}
+                        </div>
+                      </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                           <div class="ms-2 me-auto">
                             <div class="fw-bold">Resume:</div>
-                            <a href="{{ user.profile.resume.url }}" target="_blank"><span class="badge text-bg-primary rounded-pill">View here</span></a>
+                            {% if user.profile.resume %}
+                              <a href="{{ user.profile.resume.url }}" target="_blank">
+                                <span class="badge text-bg-primary rounded-pill">View here</span>
+                              </a>
+                            {% else %}
+                              <span class="badge text-bg-secondary rounded-pill">No resume uploaded</span>
+                            {% endif %}
                           </div>
                         </li>
+                        
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                           <div class="ms-2 me-auto">
                             <div class="fw-bold">Volunteer Interest</div>
@@ -193,6 +206,10 @@
     </div>
     <div class="d-flex justify-content-center mb-3 mt-3">
       <a href="{% url 'update_profile' %}" class="btn btn-primary">Update Profile</a>
+      <form method="POST" action="{% url 'delete_user' user.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger mx-3">Delete Account</button>
+      </form>
     </div>
     
     {% else %}
