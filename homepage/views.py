@@ -31,7 +31,10 @@ from django.contrib.auth.forms import SetPasswordForm
 
 from django.shortcuts import get_object_or_404
 
-
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # Create your views here.
@@ -72,6 +75,8 @@ def register_user(request):
         if form.is_valid():
             form.save()
             # Authenticate and log user in
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             email1 = form.cleaned_data.get('email')
@@ -79,10 +84,39 @@ def register_user(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
 
+            # Personalized welcome HTML
+            html_content = f"""
+                <div style="font-family: Arial, sans-serif; font-size:14px; line-height:1.6; color:#333;">
+                    <p><strong>Welcome to Latinos in Finance, {first_name} {last_name}!</strong></p>
+                    <p>We’re excited to have you as part of our growing community of Latino professionals in finance.</p>
+                    <p>To access the full benefits of your membership — including networking opportunities, event invitations, and member-only resources — please take a moment to <a href="https://crmproject-9f4q.onrender.com/profile/" target="_blank">update your profile</a>.</p>
+                    <p>This helps us personalize your experience and connect you with the right people and opportunities.</p>
+                    <p>Bienvenidos — we look forward to growing with you!</p>
+                </div>
+            """
+
             # Send a welcome email
+            message = Mail(
+                from_email='membership@latinosinfinance.org',  # Replace with a verified email
+                to_emails=email1,  # Replace with the recipient's email
+                subject='Welcome to Latinos in Finance',
+                html_content=html_content,         
+                )
+
+            try:
+                # Get the API key from the environment variable
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                
+                # Send the email
+                response = sg.send(message)
+
+                messages.success(request, 'You have successfully registered.')
+                return redirect('home')
+        
+            except Exception as e:
+                print(f"Error: {str(e)}")
+                
             
-            messages.success(request, 'You have successfully registered.')
-            return redirect('home')
         else:
             messages.error(request, 'Unsuccessful registration. Invalid information.')
     else:
