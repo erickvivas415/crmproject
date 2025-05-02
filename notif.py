@@ -1,41 +1,29 @@
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from django.core.mail import send_mail
+from dotenv import load_dotenv
+load_dotenv()
 
-import django
+# Make sure to replace 'your_actual_api_key' with the actual API key from your SendGrid account
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
-django.setup()
 
-'''
 message = Mail(
-    from_email='erickvivas@thebearrevolt.com',
-    to_emails='to@example.com',
+    from_email='membership@latinosinfinance.org',  # Replace with a verified email
+    to_emails='erickvivas415@gmail.com',  # Replace with the recipient's email
     subject='Sending with Twilio SendGrid is Fun',
-    html_content='<strong>and easy to do anywhere, even with Python</strong>')
-try:
-    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-    response = sg.send(message)
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
-except Exception as e:
-    print(str(e))
-    '''
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'  # This is literally the word 'apikey'
-EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_API_KEY')
-DEFAULT_FROM_EMAIL = 'membership@latinosinfinance.org'
-
-send_mail(
-    subject='Thanks for registering with Latinos in Finance',
-    message='Welcome to the community!',
-    from_email='membership@latinosinfinance.org',
-    recipient_list=['erickvivas.ng@gmail.com'],
-    fail_silently=False,
+    html_content='<strong>and easy to do anywhere, even with Python</strong>'
 )
+
+try:
+    # Get the API key from the environment variable
+    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+    
+    # Send the email
+    response = sg.send(message)
+    
+    # Print the response details
+    print(f"Status Code: {response.status_code}")
+    print(f"Response Body: {response.body}")
+    print(f"Response Headers: {response.headers}")
+except Exception as e:
+    print(f"Error: {str(e)}")

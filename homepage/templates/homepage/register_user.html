@@ -2,7 +2,46 @@
 {% block content %}
 <div class="col-md-6 offset-md-3">
     <br>
-    <h1>Register</h1>
+
+    <p>Welcome to our community! Please fill out the form below to create your account.</p>
+    <div class="container my-5">
+        <div class="card shadow rounded-3">
+          <div class="card-body p-5 fs-6">
+            <h2 class="mb-4 text-center">Latinos In Finance (LIF) – New Member Agreement</h2>
+    
+            <p>Welcome to Latinos In Finance (LIF). As a member of our community, we ask that you review and accept the following terms to ensure transparency and alignment with our mission.</p>
+    
+            <h5 class="mt-4">1. Communication Consent</h5>
+            <p>
+              By joining LIF, you agree to receive emails and other forms of communication from LIF, including but not limited to newsletters, event invitations, volunteer opportunities, updates on programs, and other relevant announcements. You may unsubscribe from non-essential emails at any time.
+            </p>
+    
+            <h5 class="mt-4">2. Networking & Information Sharing</h5>
+            <p>
+              To support our mission of professional connection and growth, you consent to LIF sharing limited personal or professional information (such as your name, job title, LinkedIn profile, or email address) with other members for networking and collaboration purposes. LIF will never sell or share your information with third parties for marketing purposes.
+            </p>
+    
+            <h5 class="mt-4">3. Code of Conduct</h5>
+            <p>
+              As a member of LIF, you agree to uphold a respectful, inclusive, and professional standard of behavior in all LIF-related events and interactions. Discrimination, harassment, or any conduct that undermines our values will not be tolerated.
+            </p>
+    
+            <h5 class="mt-4">4. Volunteer and Participation Opportunities</h5>
+            <p>
+              Membership does not require active volunteering, but we encourage members to engage with LIF initiatives, contribute ideas, and participate in events as part of building a strong, supportive community.
+            </p>
+    
+            <h5 class="mt-4">5. Non-Profit Acknowledgment</h5>
+            <p>
+              LIF is a nonprofit organization dedicated to empowering Latino professionals in finance. All member interactions, benefits, and services are provided in alignment with our nonprofit mission and capacity.
+            </p>
+    
+            <div class="form-check mt-5">
+              <input class="form-check-input" type="checkbox" id="agreementCheck">
+              <label class="form-check-label" for="agreementCheck">
+                I have read and agree to the terms of the LIF New Member Agreement.
+              </label>
+            </div>
     <br>
     <form method="POST" action="{% url 'register_user' %}">
         {% csrf_token %}
@@ -20,9 +59,19 @@
         {{ form.as_p }}
         <br/>
 
-            <button type="submit" class="btn btn-secondary">Register</button>
+        <div class="d-grid gap-2 mt-4">
+            <button class="btn btn-primary" type="submit" disabled id="submitBtn">Agree and Submit</button>
+          </div>
         </form>
     </form>
 </div>
+
+<script>
+    const checkbox = document.getElementById('agreementCheck');
+    const submitBtn = document.getElementById('submitBtn');
+    checkbox.addEventListener('change', () => {
+      submitBtn.disabled = !checkbox.checked;
+    });
+  </script>
 
 {% endblock %}
