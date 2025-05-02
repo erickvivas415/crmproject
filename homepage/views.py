@@ -45,6 +45,7 @@ def index(request):
 def home(request):
     return render(request, 'homepage/home.html', {})
 
+@login_required
 def profile(request):
     return render(request, 'homepage/profile.html', {})
 
@@ -89,7 +90,7 @@ def register_user(request):
                 <div style="font-family: Arial, sans-serif; font-size:14px; line-height:1.6; color:#333;">
                     <p><strong>Welcome to Latinos in Finance, {first_name} {last_name}!</strong></p>
                     <p>We’re excited to have you as part of our growing community of Latino professionals in finance.</p>
-                    <p>To access the full benefits of your membership — including networking opportunities, event invitations, and member-only resources — please take a moment to <a href="https://crmproject-9f4q.onrender.com/profile/" target="_blank">update your profile</a>.</p>
+                    <p>To access the full benefits of your membership — including networking opportunities, event invitations, and member-only resources — please take a moment to <a href="https://crmproject-9f4q.onrender.com" target="_blank">update your profile</a>.</p>
                     <p>This helps us personalize your experience and connect you with the right people and opportunities.</p>
                     <p>Bienvenidos — we look forward to growing with you!</p>
                 </div>
