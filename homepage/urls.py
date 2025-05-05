@@ -15,5 +15,8 @@ urlpatterns = [
     path('password-reset/', views.custom_password_reset_request, name='custom_password_reset'),
     path('reset/<uidb64>/<token>/', views.custom_password_reset_confirm, name='custom_password_reset_confirm'),
     path('delete_user/<int:id>/', views.delete_user, name='delete_user'),
+    path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('member/<int:id>/', views.member_profile, name='member_profile'),  # This should match the link in your template
+
 
 ]

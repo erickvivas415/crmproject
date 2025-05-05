@@ -1,11 +1,15 @@
 from django.utils.http import urlsafe_base64_decode
-from django.shortcuts import render, redirect   
+from django.shortcuts import render, redirect, get_object_or_404   
 from .models import User, Profile, Profession
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
 from django.shortcuts import redirect
 from .forms import SignUpForm
 from django.contrib.auth.models import User
+from django.db.models import Count
+from django.core.paginator import Paginator
+
+
 from django.contrib.auth.decorators import login_required
 import os
 import smtplib
@@ -43,7 +47,15 @@ def index(request):
     return render(request, 'homepage/index.html', {})
 
 def home(request):
-    return render(request, 'homepage/home.html', {})
+    users = User.objects.exclude(id=request.user.id).order_by('first_name')  # Exclude current user
+    paginator = Paginator(users, 6)  # Show 6 users per page
+
+    page_number = request.GET.get('page')
+    paginator_userdb = paginator.get_page(page_number)
+
+    return render(request, 'homepage/home.html', {
+        'paginator_userdb': paginator_userdb
+    })
 
 @login_required
 def profile(request):
@@ -148,6 +160,7 @@ def update_profile(request):
         profile.state = request.POST.get("state", profile.state)
         profile.country = request.POST.get("country", profile.country)
         profile.phone = request.POST.get("phone", profile.phone)
+        profile.gender = request.POST.get("gender", profile.gender)
         user.email = request.POST.get("email", user.email)
 
         # Second Card
@@ -266,3 +279,46 @@ def custom_password_reset_confirm(request, uidb64, token):
     else:
         messages.error(request, "The reset link is invalid or has expired.")
         return redirect('custom_password_reset')
+
+
+def dashboard_view(request):
+    total_users = Profile.objects.count()
+
+    gender_dist = list(Profile.objects.values('gender').annotate(count=Count('id')))
+    city_dist = list(Profile.objects.values('city').annotate(count=Count('id')))
+    state_dist = list(Profile.objects.values('state').annotate(count=Count('id')))
+    industry_dist = list(Profile.objects.values('user__profession__industry').annotate(count=Count('id')))
+    career_stage_dist = list(Profile.objects.values('user__profession__career_stage').annotate(count=Count('id')))
+
+    context = {
+        'total_users': total_users,
+        'gender_dist': gender_dist,
+        'industry_dist': industry_dist,
+        'city_dist': city_dist,
+        'state_dist': state_dist,
+        'career_stage_dist': career_stage_dist,
+    }
+
+    return render(request, 'homepage/dashboard.html', context)
+
+def member_profile(request, id):
+    user = get_object_or_404(User, id=id)
+    # Try to get the profile, or handle the case where it doesn't exist
+    try:
+        profile = user.profile  # Assuming a OneToOne relationship with Profile
+    except Profile.DoesNotExist:
+        profile = None  # If no profile exists, set profile to None
+
+    # Get the associated Profession information (it should exist for each user)
+    profession = user.profession if hasattr(user, 'profession') else None
+
+    # Pass the user, profile, and profession to the context
+    context = {
+        'user1': user,
+        'profile1': profile,
+        'profession1': profession,
+    }
+
+
+
+    return render(request, 'homepage/member_profile.html', context)

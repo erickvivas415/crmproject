@@ -18,7 +18,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=30)
     state = models.CharField(max_length=30)
     country = models.CharField(max_length=30)
-    gender = models.CharField(max_length=30, choices=gender_choices, default='Female')
+    gender = models.CharField(max_length=30, choices=gender_choices, default='Prefer not to say')
     image = models.ImageField(blank=True, upload_to='images/', default='images/profilepicture.jpg', null=True)
     resume = models.FileField(blank=True, upload_to='resumes/', null=True)
     file_url = models.URLField(max_length=255, blank=True)

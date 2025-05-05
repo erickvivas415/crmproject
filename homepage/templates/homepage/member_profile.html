@@ -1,0 +1,39 @@
+{% extends "homepage/index.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>{{ user1.first_name }} {{ user1.last_name }}'s Profile</h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Profile image -->
+                <img src="{{ profile1.image.url }}" alt="Profile Image" class="img-fluid rounded-circle" style="width: 200px;">
+            </div>
+            <div class="col-md-8">
+                <!-- User details -->
+                <h3>About {{ user1.first_name }}</h3>
+                <p><strong>Email:</strong> {{ user1.email }}</p>
+                <p><strong>Phone:</strong> {{ profile1.phone }}</p>
+                <p><strong>Location:</strong> {{ profile1.city }}, {{ profile1.state }}, {{ profile1.country }}</p>
+                <p><strong>Gender:</strong> {{ profile1.get_gender_display }}</p>  <!-- Display gender choice text -->
+
+                <h3>Profession</h3>
+                <p><strong>Position:</strong> {{ profession1.position }}</p>
+                <p><strong>Company:</strong> {{ profession1.company }}</p>
+                <p><strong>Industry:</strong> {{ profession1.industry }}</p>
+                <p><strong>Career Stage:</strong> {{ profession1.get_career_stage_display }}</p> <!-- Display career stage choice -->
+                
+                <a href="mailto:{{ user1.email }}" class="btn btn-primary">Contact</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <h4>Resume</h4>
+        {% if profile.resume %}
+            <a href="{{ profile1.resume.url }}" class="btn btn-secondary" target="_blank">View Resume</a>
+        {% else %}
+            <p>No resume uploaded.</p>
+        {% endif %}
+    </div>
+{% endblock %}

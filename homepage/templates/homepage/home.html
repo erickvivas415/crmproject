@@ -97,7 +97,7 @@
               <h6 style="font-size: 1rem; font-weight: 500; color: #666;">{{ x.profession.position }}</h6>
               <h6 style="font-size: 1rem; font-weight: 500; color: #666;">at {{ x.profession.company }}</h6>
               <p style="font-size: 0.9rem; color: #888; margin-top: 8px;">{{ x.profile.city }}, {{ x.profile.state }}<br>{{ x.profile.country }}</p>
-              <a href="{% url 'members_profile' x.id %}" class="btn btn-primary" style="padding: 10px 20px; background-color: #007bff; border: none; border-radius: 50px; color: white; text-decoration: none; transition: background-color 0.3s ease;">
+              <a href="{% url 'member_profile' x.id %}" class="btn btn-primary" style="padding: 10px 20px; background-color: #007bff; border: none; border-radius: 50px; color: white; text-decoration: none; transition: background-color 0.3s ease;">
                 View
               </a>
             </div>

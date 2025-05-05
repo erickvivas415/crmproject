@@ -1,0 +1,106 @@
+{% extends 'homepage/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">LIF Member Dashboard</h2>
+    <p><strong>Total Registered Members:</strong> {{ total_users }}</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Gender Distribution</h5>
+            <canvas id="genderChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h5>Industry Distribution</h5>
+            <canvas id="industryChart"></canvas>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h5>Career Stage Distribution</h5>
+            <canvas id="careerChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h5>State Distribution</h5>
+            <canvas id="stateChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Gender Chart
+    const genderData = {{ gender_dist|safe }};
+    const genderLabels = genderData.map(item => item.gender);
+    const genderCounts = genderData.map(item => item.count);
+
+    new Chart(document.getElementById('genderChart'), {
+        type: 'pie',
+        data: {
+            labels: genderLabels,
+            datasets: [{
+                data: genderCounts,
+                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56'],
+            }]
+        }
+    });
+
+    // Industry Chart
+    const industryData = {{ industry_dist|safe }};
+    const industryLabels = industryData.map(item => item['user__profession__industry']);
+    const industryCounts = industryData.map(item => item.count);
+
+    new Chart(document.getElementById('industryChart'), {
+        type: 'bar',
+        data: {
+            labels: industryLabels,
+            datasets: [{
+                label: 'Members',
+                data: industryCounts,
+                backgroundColor: '#4caf50'
+            }]
+        },
+        options: {
+            indexAxis: 'y'
+        }
+    });
+
+    // Career Stage Chart
+    const careerData = {{ career_stage_dist|safe }};
+    const careerLabels = careerData.map(item => item['user__profession__career_stage']);
+    const careerCounts = careerData.map(item => item.count);
+
+    new Chart(document.getElementById('careerChart'), {
+        type: 'bar',
+        data: {
+            labels: careerLabels,
+            datasets: [{
+                label: 'Members',
+                data: careerCounts,
+                backgroundColor: '#2196f3'
+            }]
+        }
+    });
+
+    // State Chart
+    const stateData = {{ state_dist|safe }};
+    const stateLabels = stateData.map(item => item.state);
+    const stateCounts = stateData.map(item => item.count);
+
+    new Chart(document.getElementById('stateChart'), {
+        type: 'bar',
+        data: {
+            labels: stateLabels,
+            datasets: [{
+                label: 'Members',
+                data: stateCounts,
+                backgroundColor: '#ff9800'
+            }]
+        }
+    });
+</script>
+{% endblock %}
