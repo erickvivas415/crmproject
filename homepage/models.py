@@ -77,3 +77,38 @@ class Profession(models.Model):
     
     def __str__(self):
         return(f"{self.user}")
+
+class Job(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="jobs")
+    employer = models.CharField(max_length=100)
+    description = models.TextField()
+    industry = models.CharField(max_length=50)
+    application_link = models.URLField(max_length=500)
+    application_deadline = models.DateField()
+    employer_logo = models.ImageField(
+        upload_to='employer_logos/',
+        default='employer_logos/default_logo.jpg',
+        blank=True
+    )
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.employer} - {self.industry}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        
+        # Automatically resize the logo if it's too large
+        if self.employer_logo and self.employer_logo.name != 'employer_logos/default_logo.jpg':
+            img = Image.open(self.employer_logo)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                
+                # Save the resized image
+                img_io = BytesIO()
+                img.save(img_io, format='JPEG')
+                img_io.seek(0)
+                self.employer_logo.save(self.employer_logo.name, img_io, save=False)
+            
+        super().save(*args, **kwargs)

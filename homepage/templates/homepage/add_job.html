@@ -1,0 +1,40 @@
+{% extends 'homepage/index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Add a New Job</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="employer" class="form-label">Employer:</label>
+            <input type="text" class="form-control" id="employer" name="employer" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="industry" class="form-label">Industry:</label>
+            <input type="text" class="form-control" id="industry" name="industry" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="application_link" class="form-label">Link to Application:</label>
+            <input type="url" class="form-control" id="application_link" name="application_link" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="application_deadline" class="form-label">Application Deadline:</label>
+            <input type="date" class="form-control" id="application_deadline" name="application_deadline" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="logo" class="form-label">Employer Logo:</label>
+            <input type="file" class="form-control" id="logo" name="logo">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

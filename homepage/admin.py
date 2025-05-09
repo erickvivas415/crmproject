@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.models import User  # Import the User model
 from django.contrib.auth.admin import UserAdmin
-from .models import Profile, Profession
+from .models import Profile, Profession, Job
 
 # Register your custom models
 admin.site.register(Profile)
 admin.site.register(Profession)
+admin.site.register(Job)
 
 # Admin site header and titles
 admin.site.site_header = 'LIF CRM Administration'
@@ -22,3 +23,4 @@ class CustomUserAdmin(UserAdmin):
 # Unregister the default User model and register it with the custom UserAdmin
 admin.site.unregister(User)  # Unregister the original User model
 admin.site.register(User, CustomUserAdmin)  # Register it with our custom admin class
+

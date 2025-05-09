@@ -1,10 +1,10 @@
 from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import render, redirect, get_object_or_404   
-from .models import User, Profile, Profession
+from .models import User, Profile, Profession, Job
 from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
 from django.shortcuts import redirect
-from .forms import SignUpForm
+from .forms import SignUpForm, JobForm
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.core.paginator import Paginator
@@ -21,6 +21,7 @@ from django.core.files.storage import default_storage
 import io
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.utils import timezone
 
 
 from django.db.models import Q
@@ -282,7 +283,7 @@ def custom_password_reset_confirm(request, uidb64, token):
 
 
 def dashboard_view(request):
-    total_users = Profile.objects.count()
+    total_users = User.objects.count()
 
     gender_dist = list(Profile.objects.values('gender').annotate(count=Count('id')))
     city_dist = list(Profile.objects.values('city').annotate(count=Count('id')))
@@ -319,6 +320,38 @@ def member_profile(request, id):
         'profession1': profession,
     }
 
-
-
     return render(request, 'homepage/member_profile.html', context)
+
+def jobboard(request):
+    # Get the current date
+    current_date = timezone.now().date()
+
+    # Fetch only jobs with a future application deadline
+    job_list = Job.objects.filter(application_deadline__gt=current_date)
+
+    # Paginate the filtered job list
+    paginator = Paginator(job_list, 10)  # Show 10 jobs per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Get the logged-in user
+    current_user = request.user if request.user.is_authenticated else None
+
+    return render(request, 'homepage/jobs.html', {
+        'page_obj': page_obj,
+        'user': current_user,
+    })
+
+@login_required
+def add_job(request):
+    if request.method == 'POST':
+        form = JobForm(request.POST, request.FILES)
+        if form.is_valid():
+            job = form.save(commit=False)
+            job.user = request.user  # Link the job to the logged-in user
+            job.save()
+            return redirect('jobboard')
+    else:
+        form = JobForm()
+
+    return render(request, 'homepage/add_job.html', {'form': form})

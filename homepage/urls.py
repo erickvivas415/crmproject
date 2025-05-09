@@ -17,6 +17,7 @@ urlpatterns = [
     path('delete_user/<int:id>/', views.delete_user, name='delete_user'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('member/<int:id>/', views.member_profile, name='member_profile'),  # This should match the link in your template
-
+    path('jobboard/', views.jobboard, name='jobboard'),
+    path('add_job/', views.add_job, name='add_job'),
 
 ]

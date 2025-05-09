@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Job
 from django import forms
 
 
@@ -46,3 +46,8 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('phone', 'city', 'state', 'zip', 'country', 'gender', 'image')
+
+class JobForm(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = ['employer', 'description', 'industry', 'application_link', 'application_deadline', 'employer_logo']
