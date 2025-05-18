@@ -39,6 +39,14 @@ from django.shortcuts import get_object_or_404
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from dotenv import load_dotenv
+
+# Chatbot imports
+import json
+from django.views.decorators.csrf import csrf_exempt
+from .chatbot.chat_engine import ask_question
+from django.http import JsonResponse
+
+
 load_dotenv()
 
 
@@ -355,3 +363,29 @@ def add_job(request):
         form = JobForm()
 
     return render(request, 'homepage/add_job.html', {'form': form})
+
+
+def chat_view(request):
+    history = request.session.get('chat_history', [])
+    return render(request, 'chatbot/chat.html', {'history': history})
+
+@csrf_exempt
+def chat_api(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_message = data.get('message', '')
+        bot_response = ask_question(user_message)
+
+        # If bot_response is a dictionary, extract the 'result' field
+        if isinstance(bot_response, dict) and 'result' in bot_response:
+            bot_reply = bot_response['result']
+        else:
+            bot_reply = str(bot_response)
+
+        # Store in session history
+        chat_entry = {'user': user_message, 'bot': bot_reply}
+        history = request.session.get('chat_history', [])
+        history.append(chat_entry)
+        request.session['chat_history'] = history
+
+        return JsonResponse({'response': bot_reply})

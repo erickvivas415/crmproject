@@ -207,7 +207,7 @@
       </div> -->
     </div>
     <div class="d-flex justify-content-center mb-3 mt-3">
-      <a href="{% url 'update_profile' %}" class="btn btn-primary">Update Profile</a>
+      <a href="{% url 'update_profile' %}" class="btn" style="background-color: #018b8c;">Update Profile</a>
       <form method="POST" action="{% url 'delete_user' user.id %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger mx-3">Delete Account</button>
