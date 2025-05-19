@@ -144,7 +144,7 @@ def register_user(request):
     else:
         form = SignUpForm()
         return render(request, 'homepage/register_user.html', {'form': form})
-    return render(request, 'homepage/register_user.html', {'form': form})
+    return render(request, 'homepage/index.html', {'form': form})
 
 @login_required
 def update_profile(request):

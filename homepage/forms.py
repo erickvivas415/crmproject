@@ -34,6 +34,13 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
 
+    # Validates duplicate emails
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("A user with that email already exists.")
+        return email
+
 class ProfileForm(forms.ModelForm):
     phone = forms.CharField(label="", required=False, max_length=15, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone'}))
     city = forms.CharField(label="", required=True, max_length=30, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'City'}))
