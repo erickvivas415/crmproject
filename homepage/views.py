@@ -127,7 +127,7 @@ def register_user(request):
 
             try:
                 # Get the API key from the environment variable
-                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY').strip())
                 
                 # Send the email
                 response = sg.send(message)
