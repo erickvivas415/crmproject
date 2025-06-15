@@ -107,18 +107,18 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                   </li>
                   {% if user.is_authenticated %}
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'jobboard' %}">Job Board</a>
-                  </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'jobboard' %}">Job Board</a>
+                    </li>
                   {% if user.is_staff %}
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'resumeboard' %}">Resume Board</a>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'resumeboard' %}">Resume Board</a>
                   {% endif %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -131,6 +131,9 @@
                         <a class="nav-link" href="{% url 'register_user' %}">Register</a>
                     </li>
                   {% endif %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li>
                 </ul>
               </div>
             </div>

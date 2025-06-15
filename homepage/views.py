@@ -119,7 +119,7 @@ def register_user(request):
 
             # Send a welcome email
             message = Mail(
-                from_email='membership@latinosinfinance.org',  # Replace with a verified email
+                from_email='Latinos in Finance <membership@latinosinfinance.org>',  # Replace with a verified email
                 to_emails=email1,  # Replace with the recipient's email
                 subject='Welcome to Latinos in Finance',
                 html_content=html_content,         
@@ -133,7 +133,7 @@ def register_user(request):
                 response = sg.send(message)
 
                 messages.success(request, 'You have successfully registered.')
-                return redirect('home')
+                return redirect('update_profile')  # Redirect to profile update page after registration
         
             except Exception as e:
                 print(f"Error: {str(e)}")
@@ -389,3 +389,39 @@ def chat_api(request):
         request.session['chat_history'] = history
 
         return JsonResponse({'response': bot_reply})
+    
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        html_content = request.POST.get('message')
+
+        message = Mail(
+                from_email='Contact Message LIF CRM <membership@latinosinfinance.org>',  # Replace with a verified email
+                to_emails='membership@latinosinfinance.org',  # Replace with the recipient's email
+                subject=f'Conact Form Submission from {name}',
+                html_content=f"""
+                    <p><strong>Name:</strong> {name}</p>
+                    <p><strong>Email:</strong> {email}</p>
+                    <p><strong>Message:</strong><br>{html_content}</p>
+                """,         
+                )
+
+        try:
+            # Get the API key from the environment variable
+            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY').strip())
+                
+            # Send the email
+            response = sg.send(message)
+
+            messages.success(request, 'Your message was sent successfully.')
+            return redirect('home')  # Redirect to profile update page after registration
+        
+        except Exception as e:
+            print(f"Error: {str(e)}")
+
+    else:
+
+        return render(request, 'homepage/contact.html')
+
+
