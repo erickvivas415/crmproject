@@ -245,10 +245,10 @@
           </div>
           </div>
 
-          <div id="chat-widget">
+          <div id="chat-widget" >
             <div id="chat-header" onclick="toggleChat()">
               LIF Assistant
-              <span id="toggle-icon" style="float: right; cursor: pointer;">−</span>
+              <span id="toggle-icon" style="float: right; cursor: pointer;">+</span>
             </div>
           
             <div id="chat-content">
@@ -309,13 +309,22 @@
             const icon = document.getElementById("toggle-icon");
         
             if (content.style.display === "none") {
-              content.style.display = "flex";
+              content.style.display = "block";
               icon.textContent = "−";
             } else {
               content.style.display = "none";
               icon.textContent = "+";
             }
           }
+        
+          // Minimize chat by default on page load
+          window.addEventListener('DOMContentLoaded', () => {
+            const content = document.getElementById("chat-content");
+            const icon = document.getElementById("toggle-icon");
+        
+            content.style.display = "none";
+            icon.textContent = "+";
+          });
         </script>
         
 </body>
