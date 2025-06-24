@@ -19,8 +19,19 @@
 
     <div class="row mt-4">
         <div class="col-md-6">
+            <h5>Job Title Distribution</h5>
+            <canvas id="positionChart"></canvas>
+        </div>
+        <div class="col-md-6">
             <h5>Career Stage Distribution</h5>
             <canvas id="careerChart"></canvas>
+        </div> 
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h5>City Distribution</h5>
+            <canvas id="cityChart"></canvas>
         </div>
         <div class="col-md-6">
             <h5>State Distribution</h5>
@@ -33,6 +44,17 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+    // Function to generate random colors
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
     // Gender Chart
     const genderData = {{ gender_dist|safe }};
     const genderLabels = genderData.map(item => item.gender);
@@ -44,7 +66,7 @@
             labels: genderLabels,
             datasets: [{
                 data: genderCounts,
-                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56'],
+                backgroundColor: genderLabels.map(() => getRandomColor())
             }]
         }
     });
@@ -61,7 +83,7 @@
             datasets: [{
                 label: 'Members',
                 data: industryCounts,
-                backgroundColor: '#4caf50'
+                backgroundColor: industryLabels.map(() => getRandomColor())
             }]
         },
         options: {
@@ -81,7 +103,40 @@
             datasets: [{
                 label: 'Members',
                 data: careerCounts,
-                backgroundColor: '#2196f3'
+                backgroundColor: careerLabels.map(() => getRandomColor())
+            }]
+        }
+    });
+
+    // Position Chart
+    const positionData = {{ position_dist|safe }};
+    const positionLabels = positionData.map(item => item['user__profession__position'] || 'Unknown');
+    const positionCounts = positionData.map(item => item.count);
+    
+    new Chart(document.getElementById('positionChart'), {
+        type: 'bar',
+        data: {
+            labels: positionLabels,
+            datasets: [{
+                label: 'Members',
+                data: positionCounts,
+                backgroundColor: positionLabels.map(() => getRandomColor())
+            }]
+        }
+    });
+
+    // City Chart
+    const cityData = {{ city_dist|safe }};
+    const cityLabels = cityData.map(item => item.city);
+    const cityCounts = cityData.map(item => item.count);
+    new Chart(document.getElementById('cityChart'), {
+        type: 'bar',
+        data: {
+            labels: cityLabels,
+            datasets: [{
+                label: 'Members',
+                data: cityCounts,
+                backgroundColor: cityLabels.map(() => getRandomColor())
             }]
         }
     });
@@ -98,9 +153,18 @@
             datasets: [{
                 label: 'Members',
                 data: stateCounts,
-                backgroundColor: '#ff9800'
+                backgroundColor: stateLabels.map(() => getRandomColor())
             }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: true  // or false depending on chart type
+            }
         }
+    }
     });
 </script>
 {% endblock %}

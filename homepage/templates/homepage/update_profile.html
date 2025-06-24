@@ -1,10 +1,18 @@
 {% extends 'homepage/index.html' %}
 {% block content %}
 
+<form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+  <div class="d-flex justify-content-center mb-3 mt-3">
+    <button type="submit" class="btn btn-primary">Save</button>
+
+  </div>
+
 <div class="col-md-10 offset-md-1" >
     {% if user.is_authenticated %}
         <br>
         <div class="row">
+          
+          
           <div class="col-md-4">
           <!-- First Card -->
               <div class="card" style="width: 16rem;">
@@ -14,7 +22,6 @@
                     <p><span style="color: red;">*</span> indicate required fields</p>
                     <br>
                     <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         
                         <h6>
@@ -79,13 +86,46 @@
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                           <div class="ms-2 me-auto">
                             <div class="fw-bold">Industry: <span style="color: red;">*</span></div>
-                            <input type="text" name="industry" class="form-control" value="{{ user.profession.industry }}" required>
+
+                            <select name="industry" class="form-select" required>
+                              <option value="Accounting" {% if user.profession.industry == "Accounting" %}selected{% endif %}>Accounting</option>
+                              <option value="Commercial Banking" {% if user.profession.industry == "Commercial Banking" %}selected{% endif %}>Commercial Banking</option>
+                              <option value="Consumer Banking" {% if user.profession.industry == "Consumer Banking" %}selected{% endif %}>Consumer Banking</option>
+                              <option value="Corporate Finance" {% if user.profession.industry == "Corporate Finance" %}selected{% endif %}>Corporate Finance</option>
+                              <option value="Fintech" {% if user.profession.industry == "Fintech" %}selected{% endif %}>Fintech</option>
+                              <option value="Insurance Finance" {% if user.profession.industry == "Insurance Finance" %}selected{% endif %}>Insurance Finance</option>
+                              <option value="Investment Banking" {% if user.profession.industry == "Investment Banking" %}selected{% endif %}>Investment Banking</option>
+                              <option value="Private Equity" {% if user.profession.industry == "Private Equity" %}selected{% endif %}>Private Equity</option>
+                              <option value="Real Estate Finance" {% if user.profession.industry == "Real Estate Finance" %}selected{% endif %}>Real Estate Finance</option>
+                              <option value="Venture Capital" {% if user.profession.industry == "Venture Capital" %}selected{% endif %}>Venture Capital</option>
+                              <option value="Wealth Management" {% if user.profession.industry == "Wealth Management" %}selected{% endif %}>Wealth Management</option>
+                              <option value="Student" {% if user.profession.industry == "Student" %}selected{% endif %}>Student</option>
+                              <option value="Other" {% if user.profession.industry == "Other" %}selected{% endif %}>Other</option>
+                              
+                            </select>
+
+
+                          <!--  <input type="text" name="industry" class="form-control" value="{{ user.profession.industry }}" required> -->
                           </div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                           <div class="ms-2 me-auto">
-                            <div class="fw-bold">Industry Interest: <span style="color: red;">*</span></div>
-                            <input type="text" name="industry_interest" class="form-control" value="{{ user.profession.industry_interest }}" required>
+                            <select name="industry_interest" class="form-select" required>
+                              <option value="Accounting" {% if user.profession.industry == "Accounting" %}selected{% endif %}>Accounting</option>
+                              <option value="Commercial Banking" {% if user.profession.industry == "Commercial Banking" %}selected{% endif %}>Commercial Banking</option>
+                              <option value="Consumer Banking" {% if user.profession.industry == "Consumer Banking" %}selected{% endif %}>Consumer Banking</option>
+                              <option value="Corporate Finance" {% if user.profession.industry == "Corporate Finance" %}selected{% endif %}>Corporate Finance</option>
+                              <option value="Fintech" {% if user.profession.industry == "Fintech" %}selected{% endif %}>Fintech</option>
+                              <option value="Insurance Finance" {% if user.profession.industry == "Insurance Finance" %}selected{% endif %}>Insurance Finance</option>
+                              <option value="Investment Banking" {% if user.profession.industry == "Investment Banking" %}selected{% endif %}>Investment Banking</option>
+                              <option value="Private Equity" {% if user.profession.industry == "Private Equity" %}selected{% endif %}>Private Equity</option>
+                              <option value="Real Estate Finance" {% if user.profession.industry == "Real Estate Finance" %}selected{% endif %}>Real Estate Finance</option>
+                              <option value="Venture Capital" {% if user.profession.industry == "Venture Capital" %}selected{% endif %}>Venture Capital</option>
+                              <option value="Wealth Management" {% if user.profession.industry == "Wealth Management" %}selected{% endif %}>Wealth Management</option>
+                              <option value="Student" {% if user.profession.industry == "Student" %}selected{% endif %}>Student</option>
+                              <option value="Other" {% if user.profession.industry == "Other" %}selected{% endif %}>Other</option>
+                              
+                            </select>
                           </div>
                         </li>
                       </ol>
@@ -113,15 +153,15 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                              <div class="fw-bold">GPA: <span style="color: red;">*</span></div>
-                                <input type="text" name="gpa" class="form-control" value="{{ user.profession.gpa }}" required>
+                              <div class="fw-bold">GPA:</div>
+                                <input type="text" name="gpa" class="form-control" value="{{ user.profession.gpa }}">
                             </div>
                           </li>
                       </ol>
                 </div>
                 <div class="col-md-4">
                   <div class="card-body">
-                    <p>Career</p>
+                    <p>Resume & Others</p>
                     <ol class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                           <div class="ms-2 me-auto">
@@ -155,7 +195,6 @@
 
           </div>
           <br>
-                        <button type="submit" class="btn btn-primary">Save</button>
                     </form>
     </div>
     {% else %}

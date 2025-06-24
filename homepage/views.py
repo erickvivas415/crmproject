@@ -108,14 +108,35 @@ def register_user(request):
 
             # Personalized welcome HTML
             html_content = f"""
-                <div style="font-family: Arial, sans-serif; font-size:14px; line-height:1.6; color:#333;">
-                    <p><strong>Welcome to Latinos in Finance, {first_name} {last_name}!</strong></p>
-                    <p>We’re excited to have you as part of our growing community of Latino professionals in finance.</p>
-                    <p>To access the full benefits of your membership — including networking opportunities, event invitations, and member-only resources — please take a moment to <a href="https://crmproject-9f4q.onrender.com" target="_blank">update your profile</a>.</p>
-                    <p>This helps us personalize your experience and connect you with the right people and opportunities.</p>
-                    <p>Bienvenidos — we look forward to growing with you!</p>
-                </div>
-            """
+                            <div style="font-family: Arial, sans-serif; font-size:14px; line-height:1.6; color:#333;">
+                                <!-- Logo at the top -->
+                                <div style="text-align: center; margin-bottom: 20px;">
+                                    <img src="https://images.squarespace-cdn.com/content/v1/52742948e4b0c2eac22b888e/1383594624830-QFRNTFEY4CJ8HY4I0QZQ/LIFi.jpg?format=1500w" alt="Latinos in Finance" style="width: 150px;">
+                                </div>
+
+                                <p><strong>Welcome to Latinos in Finance, {first_name} {last_name}!</strong></p>
+                                <p>We’re excited to have you as part of our growing community of Latino professionals in finance.</p>
+                                <p>To access the full benefits of your membership — including networking opportunities, event invitations, and member-only resources — please take a moment to 
+                                    <a href="https://crmproject-9f4q.onrender.com" target="_blank">update your profile</a>.
+                                </p>
+                                <p>This helps us personalize your experience and connect you with the right people and opportunities.</p>
+                                <p>Bienvenidos — we look forward to growing with you!</p>
+                                <br>
+                                <p>Follow us:</p>
+                                <!-- Social media links -->
+                                <div style="margin-top: 30px; text-align: left;">
+                                    <a href="https://instagram.com/latinosinfinance" target="_blank" style="margin-right: 10px;">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" style="width: 24px; height: 24px;">
+                                    </a>
+                                    <a href="https://www.linkedin.com/company/latinos-in-finance" target="_blank" style="margin-right: 10px;">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width: 24px; height: 24px;">
+                                    </a>
+                                    <a href="https://www.youtube.com/@LatinosInFinance" target="_blank">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" style="width: 24px; height: 24px;">
+                                    </a>
+                                </div>
+                            </div>
+                        """
 
             # Send a welcome email
             message = Mail(
@@ -298,6 +319,7 @@ def dashboard_view(request):
     state_dist = list(Profile.objects.values('state').annotate(count=Count('id')))
     industry_dist = list(Profile.objects.values('user__profession__industry').annotate(count=Count('id')))
     career_stage_dist = list(Profile.objects.values('user__profession__career_stage').annotate(count=Count('id')))
+    position_dist = list(Profile.objects.values('user__profession__position').annotate(count=Count('id')))
 
     context = {
         'total_users': total_users,
@@ -306,6 +328,7 @@ def dashboard_view(request):
         'city_dist': city_dist,
         'state_dist': state_dist,
         'career_stage_dist': career_stage_dist,
+        'position_dist': position_dist,
     }
 
     return render(request, 'homepage/dashboard.html', context)
@@ -425,3 +448,5 @@ def contact(request):
         return render(request, 'homepage/contact.html')
 
 
+def scholarship(request):
+    return render(request, 'homepage/scholarship.html', {})

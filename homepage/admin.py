@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.models import User  # Import the User model
 from django.contrib.auth.admin import UserAdmin
-from .models import Profile, Profession, Job
+from .models import Profile, Profession, Job, Scholarship
 
 # Register your custom models
 admin.site.register(Profile)
 admin.site.register(Profession)
 admin.site.register(Job)
+admin.site.register(Scholarship)
 
 # Admin site header and titles
 admin.site.site_header = 'LIF CRM Administration'

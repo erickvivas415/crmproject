@@ -1,0 +1,70 @@
+{% extends 'homepage/index.html' %}
+{% block content %}
+
+
+<div class="job-list col-md-10 offset-md-1 my-3"> 
+    <h1>2025 Latinos in Finance (LIF) Scholarship Application</h1>
+    <h3>Welcome to the Latinos in Finance 2025 Scholarship Application!</h3>
+    <br>
+    <br>
+    <p>The <b>Latinos in Finance (LIF) Scholarship</b> is dedicated to supporting students in their academic pursuits by alleviating the financial burden of higher education. Our mission is to develop the next generation of Latinx leaders and foster life-changing opportunities by building a diverse and inclusive career pipeline into the financial industry.</p>
+    <br>
+    <p>Thanks to the generous contributions of our corporate sponsors, <b>Latinos in Finance</b> is proud to award multiple scholarships to outstanding students who meet the specified criteria. Scholarship recipients may receive awards of up to <b>$1,500</b>, as determined by the selection committee.</p>
+    <br>
+    <h3>BASIC ELIGIBILITY</h3>
+    <p>To be eligible for the Latinos in Finance (LIF) Scholarship, applicants must:</p>
+    <ul>
+        <li>Be enrolled in a Bachelor’s degree program at a U.S.-accredited, not-for-profit, private, or public college or university. Students pursuing or completing their Associate’s degree or fulfilling general education requirements for a Bachelor’s program at a community college are also encouraged to apply.</li>
+        <li>Have a minimum cumulative weighted GPA of 3.0 on a 4.0 scale.</li>
+        <li>Be available to attend the 2025 LIF Bootcamp (in person or virtually) in September and provide required materials for future marketing campaigns. *</li>
+    </ul>
+    <p>*Follow us on social media for the official save-the-date announcement: LinkedIn | Facebook | Instagram</p>
+    <br>
+    <h3>Ideal Candidate</h3>
+    <ul>
+        <li>Outstanding academic achievement</li>
+        <li>Strong leadership abilities</li>
+        <li>Exceptional personal and professional success skills</li>
+        <li>A keen interest in Finance, Mathematics, Statistics, Business, Economics, or Accounting</li>
+    </ul>
+    <br>
+    <h3>Application Deadline</h3>
+    <p>The deadline to submit this application is: <b>Friday, August 22, 2025, at 11:59 PM PST</b></p>
+    <p>This scholarship is <b>needs-based financial aid</b>, and we encourage all eligible students to apply.</p>
+    <p>If you have any questions, please feel free to reach out at scholarships@latinosinfinance.org.</p>
+    <p>Take the next step in your academic and professional journey—apply today!</p>
+    <br>
+    <p style="color: red;"> * indicates required questions</p>
+    <p>How did you hear about LIF? <span style="color: red;">*</span></p>
+    <form method="POST" action="{% url 'scholarship' %}">
+        {% csrf_token %}
+        <select name="heard_about" id="heard_about" class="form-select" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Instagram">Instagram</option>
+            <option value="LIF Website">LIF Website</option>
+            <option value="Other">Other</option>
+        </select>
+        <br>
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address" class="form-control" placeholder="address">
+        <br>
+        <label for="phone">Phone Number</label>
+        <input type="text" name="phone" id="phone" class="form-control" placeholder="{{ user.profile.phone }}">
+        <br>
+        <label for="school">School Name</label>
+        <input type="text" name="school" id="school" class="form-control" placeholder="{{ user.profession.school }}">
+        <br>
+
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+        
+
+
+
+
+
+
+
+{% endblock %}

@@ -10,8 +10,24 @@
 
     <br>
     </div>
-  </div>    
-  <div id="carousel" style="width: 100%; height: 600px; overflow: hidden; position: relative; margin-bottom: 20px;">
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+
+    <!-- Featured Members -->
+    <div style="width: 40vw;">
+      <h2 style="color: #018b8c;">Upcoming Events:</h2>
+      <br>
+      <p>Bootcamp 2025</p>
+      <br>
+      <h2 style="color: #018b8c;">Scholarship Opportunities</h2>
+      <p>Apply for the Latinos in Finance Scholarship</p>
+      <br>
+      <h2 style="color: #018b8c;">Mentorship program</h2>
+      <p>Connect with mentors in the finance industry</p>
+      <br>
+      <!-- You can add member cards, images, etc. -->
+    </div> 
+  <div id="carousel" style="width: 50vw; height: 600px; overflow: hidden; position: relative; margin-bottom: 20px;">
     <div id="carousel-items" style="display: flex; transition: transform 0.5s ease-in-out; width: 300%;">
       
       <div style="flex: 0 0 33.33%; text-align: center; position:relative;">
@@ -30,6 +46,7 @@
              onmouseout="this.style.transform='scale(1)';">
       </div>
     </div>
+  </div>
   </div>
   <script>
     let currentIndex = 0;

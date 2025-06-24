@@ -65,10 +65,10 @@ class Profession(models.Model):
     linkedin = models.URLField(max_length=200)
     industry = models.CharField(max_length=30)
     career_stage = models.CharField(max_length=30, choices=career_stage_choices, default='Student')
-    company = models.CharField(max_length=30)
-    position = models.CharField(max_length=30)
+    company = models.CharField(max_length=60)
+    position = models.CharField(max_length=60)
     industry_interest = models.CharField(max_length=30)
-    school = models.CharField(max_length=30)
+    school = models.CharField(max_length=60)
     major_minor = models.CharField(max_length=30)
     gpa = models.DecimalField(max_digits=3, decimal_places=2, null=False, default=0.00)
     graduation_year = models.IntegerField(default=1900)
@@ -112,3 +112,40 @@ class Job(models.Model):
                 self.employer_logo.save(self.employer_logo.name, img_io, save=False)
             
         super().save(*args, **kwargs)
+
+
+class Scholarship(models.Model):
+    HEARD_ABOUT_CHOICES = [
+        ('LinkedIn', 'LinkedIn'),
+        ('Facebook', 'Facebook'),
+        ('Instagram', 'Instagram'),
+        ('LIF Website', 'LIF Website'),
+        ('Other', 'Other'),
+    ]
+
+    GRADE_YEAR_CHOICES = [
+        ('Freshman', 'Freshman'),
+        ('Sophomore', 'Sophomore'),
+        ('Junior', 'Junior'),
+        ('Senior', 'Senior'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="scholarship", null=True)
+    heard_about = models.CharField(max_length=50, choices=HEARD_ABOUT_CHOICES, default='LIF Website')
+    address = models.CharField(max_length=255)
+    area_of_study = models.CharField(max_length=255)
+    resilience_growth = models.TextField()
+    career_vision_strategy = models.TextField()
+    passion_for_finance = models.TextField()
+    optional_additonal_info = models.TextField(blank=True, null=True)
+    transcript = models.FileField(blank=True, upload_to='transcripts/', null=True)
+    award_letter = models.FileField(blank=True, upload_to='award_letters/', null=True)
+
+
+    def __str__(self):
+        return(f"{self.user}")
+
+    class Meta:
+        verbose_name = "Scholarship Application"
+        verbose_name_plural = "Scholarship Applications"
+        ordering = ["user"]
