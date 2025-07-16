@@ -200,7 +200,8 @@ def update_profile(request):
         profession.school = request.POST.get("school", profession.school)
         profession.major_minor = request.POST.get("major_minor", profession.major_minor)
         profession.graduation_year = request.POST.get("graduation_year", profession.graduation_year)
-        profession.gpa = request.POST.get("gpa", profession.gpa)
+        gpa = request.POST.get("gpa")
+        profession.gpa = float(gpa) if gpa not in [None, ''] else 0.0
 
         # Third Card
         profession.linkedin = request.POST.get("linkedin", profession.linkedin)

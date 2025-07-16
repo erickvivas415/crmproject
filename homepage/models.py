@@ -10,6 +10,9 @@ from django.core.validators import FileExtensionValidator
 gender_choices = (
     ('Female','Female'),
     ('Male','Male'),
+    ('Non-Binary','Non-Binary'),
+    ('Transgender','Transgender'),
+    ('Not Listed','Not Listed'),
     ('Prefer not to say','Prefer not to say'))
 
 class Profile(models.Model):
