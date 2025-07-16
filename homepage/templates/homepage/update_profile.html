@@ -55,6 +55,7 @@
                     
                         <label>Email: <span style="color: red;">*</span></label>
                         <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                        <input type="checkbox" name="email_show" id="email_show" {% if user.profile.email_show %}checked{% endif %}>                        <label class="form-check-label" for="email_show">Show my email publicly?</label>
                         <br>
                         <label>Profile Image:</label>
                         <br><br>

@@ -26,8 +26,17 @@
                     {{ user.profile.state }}
                     <p>{{ user.profile.country }}</p>
                     <p>Phone # {{ user.profile.phone }}</p>
+                    <p><small class="text-info">Your phone number is only visible to you and the LIF team</small></p>
                     <p>Gender: {{ user.profile.gender }}</p>
                     <p>Email: {{ user.email }}</p>
+                    <div>
+                      {% if user.profile.email_show %}
+                        <p><small class="text-info">Your email is visible.</small></p>
+                      {% else %}
+                        <p><small class="text-info">Email is hidden, update your profile to share and allow other members to reach you</small></p>
+                      {% endif %}
+                    </div>
+
                   </div>                  
               </div>
           </div>

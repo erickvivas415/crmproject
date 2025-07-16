@@ -192,6 +192,7 @@ def update_profile(request):
         profile.phone = request.POST.get("phone", profile.phone)
         profile.gender = request.POST.get("gender", profile.gender)
         user.email = request.POST.get("email", user.email)
+        profile.email_show = request.POST.get('email_show') == "on"
 
         # Second Card
         profession.career_stage = request.POST.get("career_stage", profession.career_stage)

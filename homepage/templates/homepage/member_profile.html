@@ -15,19 +15,30 @@
             <div class="col-md-8">
                 <!-- User details -->
                 <h3>About {{ user1.first_name }}</h3>
-                <p><strong>Email:</strong> {{ user1.email }}</p>
+                
                 <p><strong>Location:</strong> {{ profile1.city }}, {{ profile1.state }}, {{ profile1.country }}</p>
                 <p><strong>Gender:</strong> {{ profile1.get_gender_display }}</p>  <!-- Display gender choice text -->
-
                 <h3>Profession</h3>
                 <p><strong>Position:</strong> {{ profession1.position }}</p>
                 <p><strong>Company:</strong> {{ profession1.company }}</p>
                 <p><strong>Industry:</strong> {{ profession1.industry }}</p>
                 <p><strong>Career Stage:</strong> {{ profession1.get_career_stage_display }}</p> <!-- Display career stage choice -->
+                <div>
+                    {% if user1.profile1.email_show  %} 
+                    <p><strong>Email:</strong> {{ user1.email }}</p>
+                    {% else %}
+                    <div class="alert alert-warning">
+                        Email is currently not available. 
+                    </div>
+                    {% endif %}
+                </div>
+                <div>
                 <a href="{{ profession1.linkedin }}" style="margin: 0 10px; color: #333; text-decoration: none;">
                     <img src="{% static '/media/images/linkedin.png' %}" alt="LinkedIn" style="width: 32px; height: 32px;">
                   </a>
-                <a href="mailto:{{ user1.email }}" class="btn btn-primary">Contact</a>
+                </div>
+                <br>
+                 
             </div>
         </div>
 
